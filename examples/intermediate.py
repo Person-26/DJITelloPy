@@ -10,7 +10,7 @@ frame_read = tello.get_frame_read()
 
 # 50 point balloon recognition
 tello.takeoff()
-# need to add colors other than green and multi-object detection
+# need to add colors other than green
 while objectdetection(frame_read.frame) == None:
     time.sleep(0.01)
 tello.land()

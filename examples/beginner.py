@@ -1,4 +1,5 @@
 import time
+import cv2
 from djitellopy import Tello
 
 tello = Tello()
@@ -26,7 +27,7 @@ tello.move_back(100)
 
 # 10 points circle
 tello.curve_xyz_speed(100, 100, 0, 200, 0, 0, 10)
-tello.curve_xyz_speed(-100, 100, 0, -200, 0, 0, 10)
+tello.curve_xyz_speed(-100, -100, 0, -200, 0, 0, 10)
 
 # 20 points image
 tello.streamon()

@@ -36,18 +36,12 @@ def objectdetection(frame):
     mask = cv2.dilate(mask, None, iterations=2)
 
     # find contours in the mask and initialize the current
-    # (x, y) center of the ball
     cnts = cv2.findContours(mask.copy(), cv2.RETR_EXTERNAL,
         cv2.CHAIN_APPROX_SIMPLE)
-    cnts = imutils.grab_contours(cnts)
-    center = None
 
-    # only proceed if at least one contour was found
-    if len(cnts) > 0:
-        # find the largest contour in the mask, then use
-        # it to compute the minimum enclosing circle and
-        # centroid
-        c = max(cnts, key=cv2.contourArea)
-        ((x, y), radius) = cv2.minEnclosingCircle(c)
+    for cnt in cnts:
+        # count and record contours
+        c = max(cnt, key=cv2.contourArea)
         M = cv2.moments(c)
-        return (int(M["m10"] / M["m00"]), int(M["m01"] / M["m00"]))
+        cnt = (int(M["m10"] / M["m00"]), int(M["m01"] / M["m00"]))
+    return cnts
