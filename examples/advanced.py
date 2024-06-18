@@ -1,6 +1,7 @@
 from djitellopy import Tello
 from examples import objectdetection
 from examples.pathfinder import pathfinder
+import cv2
 
 tello = Tello()
 tello.connect()
@@ -99,7 +100,8 @@ tello.land()
 
 # 50 point detect tennis balls
 tello.takeoff()
-print(len(objectdetection()))
+tello.streamon()
+print(len(objectdetection(tello.get_frame_read().frame)))
 tello.land()
 
 # 50 point search for mission pad
@@ -114,27 +116,28 @@ while tello.get_mission_pad() != pad:
             for i in range(move):
                 tello.move_forward(10)
                 direction = "left"
-                if tello.get_mission_pad() == 1:
+                if tello.get_mission_pad() == pad:
                     break
         case "left":
             for i in range(move):
                 tello.move_left(10)
                 direction = "back"
                 move += 1
-                if tello.get_mission_pad() == 1:
+                if tello.get_mission_pad() == pad:
                     break
         case "back":
             for i in range(move):
                 tello.move_forward(10)
                 direction = "right"
-                if tello.get_mission_pad() == 1:
+                if tello.get_mission_pad() == pad:
                     break
         case "right":
             for i in range(move):
                 tello.move_right(10)
                 direction = "forward"
                 move += 1
-                if tello.get_mission_pad() == 1:
+                if tello.get_mission_pad() == pad:
                     break
+cv2.imwrite("picture.png", tello.get_frame_read().frame)
 for i in range(pad):
     tello.flip_forward()
